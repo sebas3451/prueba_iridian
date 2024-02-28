@@ -1,0 +1,21 @@
+{# templates/contacto/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Contacto{% endblock %}
+{% block body %}
+    <h1>Contacto</h1>
+{% for flash_message in app.session.flashbag.get('alert') %}
+    <div class="alert alert-warning" role="alert">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+
+    {{ form_start(form) }}
+        {{ form_row(form.nombre) }}
+        {{ form_row(form.apellido) }}
+        {{ form_row(form.correo) }}
+        {{ form_row(form.celular) }}
+        {{ form_row(form.mensaje) }}
+    {{ form_end(form) }}
+{% endblock %}
