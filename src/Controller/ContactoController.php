@@ -23,22 +23,21 @@ class ContactoController extends AbstractController
     #[Route('/contacto', name: 'contacto')]
     public function contacto(Request $request): Response
     {
+
         // Crear y manejar el formulario
         $contacto = new Contacto();
         $form = $this->createForm(ContactoFormType::class, $contacto);
         $form->handleRequest($request);
     
-         if ($form->isSubmitted() && $form->isValid()) {
-
+        if ($form->isSubmitted() && $form->isValid()) {
             // Verificar si ya existe un mensaje con el mismo correo y la misma fecha
             $correo = $request->request->get('correo');
             $existeMensaje = $this->entityManager->getRepository(Contacto::class)
-                ->findOneBy([
+                ->findBy([
                     'correo' => $correo, // Obtener la fecha actual
                 ]);
-        // Si ya existe un mensaje con el mismo correo y la misma fecha, mostrar un mensaje de error
+            // Si ya existe un mensaje con el mismo correo y la misma fecha, mostrar un mensaje de error
             if ($existeMensaje) {
-                var_dump('nullll');
                 $this->addFlash('error', 'Ya has enviado un mensaje hoy.');
                 return $this->redirectToRoute('ruta_de_tu_pagina_de_contacto');
             }
